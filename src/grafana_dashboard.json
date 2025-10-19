@@ -1,0 +1,110 @@
+{
+  "dashboard": {
+    "title": "Bank Fraud Detection System",
+    "description": "Real-time monitoring ",
+    "tags": ["fraud", "security"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "📊 Transaction Overview",
+        "type": "stat",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "targets": [
+          {
+            "expr": "fraud_transactions_total{status='normal'}",
+            "legendFormat": "Normal Transactions"
+          },
+          {
+            "expr": "fraud_transactions_total{status='suspicious'}",
+            "legendFormat": "Suspicious Transactions"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "short"
+          }
+        }
+      },
+      {
+        "id": 2,
+        "title": "🚨 Fraud Risk Level",
+        "type": "gauge",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+        "targets": [
+          {
+            "expr": "fraud_risk_level_percent",
+            "legendFormat": "Risk Level"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "min": 0,
+            "max": 100,
+            "unit": "percent",
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": 0},
+                {"color": "yellow", "value": 2},
+                {"color": "red", "value": 5}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 3,
+        "title": "💰 Suspicious Amount",
+        "type": "stat",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+        "targets": [
+          {
+            "expr": "fraud_suspicious_amount_total",
+            "legendFormat": "Suspicious Amount"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "currencyUZS"
+          }
+        }
+      },
+      {
+        "id": 4,
+        "title": "📈 Transaction Amount Distribution",
+        "type": "histogram",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+        "targets": [
+          {
+            "expr": "fraud_transaction_amount_bucket",
+            "legendFormat": "Amount Distribution"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "🕒 Transactions Over Time",
+        "type": "timeseries",
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 16},
+        "targets": [
+          {
+            "expr": "rate(fraud_transactions_total{status='normal'}[5m])",
+            "legendFormat": "Normal Transactions"
+          },
+          {
+            "expr": "rate(fraud_transactions_total{status='suspicious'}[5m])",
+            "legendFormat": "Suspicious Transactions"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"}
+          }
+        }
+      }
+    ],
+    "time": {"from": "now-1h", "to": "now"},
+    "refresh": "10s"
+  }
+}
