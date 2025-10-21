@@ -1,9 +1,3 @@
-# src/database.py
-"""
-🗄️ БЕЗОПАСНАЯ РАБОТА С POSTGRESQL
-С защитой от SQL инъекций
-"""
-
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import pandas as pd
@@ -11,6 +5,7 @@ from contextlib import contextmanager
 import os
 from datetime import datetime
 import logging
+import pytest
 
 logger = logging.getLogger(__name__)
 
@@ -165,6 +160,13 @@ class DatabaseManager:
         except Exception as e:
             logger.error(f"Error getting dashboard data: {e}")
             return None
+        
+        def test_basic_example():"""Простой тест для проверки работы pytest"""
+    assert 1 + 1 == 2
+
+def test_another_example():
+    """Ещё один тест"""
+    assert "hello".upper() == "HELLO"
 
 # Синглтон для использования во всем приложении
 db = DatabaseManager()
